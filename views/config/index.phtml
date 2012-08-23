@@ -1,0 +1,78 @@
+<?php 
+/*=========================================================================
+MIDAS Server
+Copyright (c) Kitware SAS. 20 rue de la Villette. All rights reserved.
+69328 Lyon, FRANCE.
+
+See Copyright.txt for details.
+This software is distributed WITHOUT ANY WARRANTY; without even
+the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.  See the above copyright notices for more information.
+=========================================================================*/
+
+$this->headScript()->appendFile($this->coreWebroot . '/public/js/jquery/jquery.form.js');
+$this->headScript()->appendFile($this->moduleWebroot . '/public/js/config/config.index.js');
+?>
+<link type="text/css" rel="stylesheet" href="<?php echo $this->moduleWebroot?>/public/css/config/config.index.css" />
+<link type="text/css" rel="stylesheet" href="<?php echo $this->coreWebroot?>/public/css/common/common.genericPage.css" />
+<div class="viewMain">
+     <div class ="genericWrapperTopRight">
+         <?php
+          echo '<div style="float:right;margin-right:2px;" class="genericBigButton ">';
+            echo "<a  href='{$this->webroot}/admin#tabs-modules'><img style='float:left;margin-right:2px;' alt='' src='{$this->coreWebroot}/public/images/icons/back.png'/>";
+            echo $this->t('Back');  
+            echo "</a>";
+          echo '</div>';
+          
+        ?>
+    </div>
+
+    <br/>
+    <div class="journalCommunity">
+    <h3>Journals:</h3>
+      <?php
+        echo
+       "<div class='addJournal'>
+          <a href='javascript:;' class='addJournalLink' ><img alt='' src='{$this->coreWebroot}/public/images/icons/add.png'/> {$this->t('Add a journal')}</a>
+        </div>
+        <br/>";
+        if(count($this->communities) == 0)
+          {
+          echo "No journals.";
+          }
+        else
+          {
+      ?>
+      
+          <table style='display:block;' id="journalTable" class="journalList">
+            <thead>
+              <tr>
+                <th class="name"><?php echo $this->t('Journal Name');?></th>
+                <th><?php echo $this->t('Description');?></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              foreach($this->communities as $community)
+                {
+                echo '<tr>';
+                echo '  <td>';
+                echo "<a href='{$this->webroot}/community/{$community->getKey()}'>{$community->getName()}";
+                echo '</a> </td>';
+                echo '  <td><span style="float: left;">'.$community->getDescription().'</span>';
+                echo "<span class='manageJournal'>";
+                echo "<a href='javascript:;' element='".$community->getKey()."' class='journalDeleteLink'><img alt='' src='{$this->coreWebroot}/public/images/icons/close.png'/></a>";
+                echo "</span>";
+                echo "  </td>";
+                echo "</tr>";
+                }
+              ?>
+            </tbody>
+          </table>
+          <?php
+          }
+          ?> 
+    </br>
+
+</div>
+
